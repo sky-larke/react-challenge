@@ -1,41 +1,27 @@
 import Banner from './components/Banner'
 import CourseList from './components/CourseList'
+import type { Course } from './types/Course'
+import { useJsonQuery } from './utilities/useJsonQuery'
 
-const schedule = {
-  "title": "CS Courses for 2018-2019",
-  "courses": {
-    "F101" : {
-      "term": "Fall",
-      "number": "101",
-      "meets" : "MWF 11:00-11:50",
-      "title" : "Computer Science: Concepts, Philosophy, and Connections"
-    },
-    "F110" : {
-      "term": "Fall",
-      "number": "110",
-      "meets" : "MWF 10:00-10:50",
-      "title" : "Intro Programming for non-majors"
-    },
-    "S313" : {
-      "term": "Spring",
-      "number": "313",
-      "meets" : "TuTh 15:30-16:50",
-      "title" : "Tangible Interaction Design and Learning"
-    },
-    "S314" : {
-      "term": "Spring",
-      "number": "314",
-      "meets" : "TuTh 9:30-10:50",
-      "title" : "Tech & Human Interaction"
-    }
-  }
-};
+interface Schedule {
+  title: string
+  courses: Record<string, Course>
+}
 
-const App = () => (
-  <>
-    <Banner title={schedule.title} />
-    <CourseList courses={schedule.courses} />
-  </>
-)
+const App = () => {
+  const [schedule, loading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php')
+
+  if (loading) return <p className="text-center p-8">Loading...</p>
+  if (error) return <p className="text-center p-8 text-red-500">{error.message}</p>
+
+  const { title, courses } = schedule as Schedule
+
+  return (
+    <>
+      <Banner title={title} />
+      <CourseList courses={courses} />
+    </>
+  )
+}
 
 export default App

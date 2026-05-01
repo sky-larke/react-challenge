@@ -1,9 +1,4 @@
-interface Course {
-  term: string
-  number: string
-  meets: string
-  title: string
-}
+import type { Course } from '../types/Course'
 
 interface CourseListProps {
   courses: Record<string, Course>
@@ -21,4 +16,4 @@ const CourseList = ({ courses }: CourseListProps) => (
   </ul>
 )
 
-export default CourseList;
+export default CourseList
