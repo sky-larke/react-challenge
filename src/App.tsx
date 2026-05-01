@@ -1,7 +1,16 @@
-const App = () => (
-  <main>
-    <h1>A starter page</h1>
-  </main>
-);
+
+const App = () => {
+  const schedule = {
+  title: "CS Courses for 2018-2019"
+};
+
+  return (
+    <>
+      <h1>{schedule}</h1>
+      
+    </>
+  );
+};
 
 export default App;
+
